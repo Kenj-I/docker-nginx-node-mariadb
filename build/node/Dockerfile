@@ -13,3 +13,6 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 # RUN locale-gen en_US.UTF-8
 # ENV LANG=C.UTF-8
 # ENV LANGUAGE=en_US:en
+
+# npm version up
+RUN npm i -g npm
