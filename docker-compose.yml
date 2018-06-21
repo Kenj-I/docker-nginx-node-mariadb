@@ -1,0 +1,51 @@
+version: '3'
+
+services:
+
+    database:
+        image: mariadb:latest
+        container_name: hoge
+        env_file: ./build/envfile
+        command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+        ports:
+            - "$HOST_DB_PORT:3306"
+        volumes:
+            - ./data:/var/lib/mysql
+            #if you insert init data
+            #- ../app/initial.sql:/docker-entrypoint-initdb.d/initial.sql
+        networks:
+            - app
+
+    app:
+        build: build/node
+        image: node:6-alpine
+        container_name: tokenote_app
+        working_dir: "/usr/src/app"
+        depends_on:
+            - database
+        env_file: ./build/envfile
+        environment:
+            # use nginx-proxy
+            - VIRTUAL_HOST=$VIRTUAL_HOST
+            # if you use https
+            - CERT_NAME=default
+            # - HTTPS_METHOD=noredirect
+        expose:
+            - "8080"
+        volumes:
+            - ./project:/usr/src/app
+        logging:
+            options:
+                max-size: "5m"
+                max-file: "10"
+        networks:
+        #    - app
+             - external_nginx_proxy
+        command: "npm install"
+        command: "npm start"
+
+networks:
+  # app:
+  #use nginx proxy
+  external_nginx_proxy:
+    external: true
