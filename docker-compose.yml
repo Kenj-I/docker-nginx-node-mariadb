@@ -31,7 +31,7 @@ services:
             - CERT_NAME=default
             # - HTTPS_METHOD=noredirect
         expose:
-            - "8080"
+            - "80"
         volumes:
             - ./project:/usr/src/app
         logging:
