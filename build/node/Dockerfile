@@ -15,4 +15,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 # ENV LANGUAGE=en_US:en
 
 # npm version up
-RUN npm i -g npm
+# RUN npm i -g npm
+
+# vue-cli
+RUN npm install -g vue-cli

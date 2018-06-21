@@ -13,5 +13,5 @@ $ docker-compose up -d
 
 ```shell
 $ docker-compose build
-$ docker-compose run app npm install -g vue-cli && vue init webpack ./
+$ docker-compose run --rm -v ./project:/usr/src/app -w /usr/src/app app vue init webpack .
 ```
