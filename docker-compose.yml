@@ -4,7 +4,7 @@ services:
 
     database:
         image: mariadb:latest
-        container_name: hoge
+        container_name: container_name
         env_file: ./build/envfile
         command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
         ports:
@@ -19,7 +19,7 @@ services:
     app:
         build: build/node
         image: node:6-alpine
-        container_name: tokenote_app
+        container_name: container_name
         working_dir: "/usr/src/app"
         depends_on:
             - database
@@ -39,13 +39,13 @@ services:
                 max-size: "5m"
                 max-file: "10"
         networks:
-        #    - app
+           - app
              - external_nginx_proxy
         command: "npm install"
         command: "npm start"
 
 networks:
-  # app:
+  app:
   #use nginx proxy
   external_nginx_proxy:
     external: true
